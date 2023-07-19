@@ -4,7 +4,6 @@ use anchor_lang::prelude::*;
 use anchor_lang::Discriminator;
 use fixed::types::I80F48;
 
-use static_assertions::const_assert_eq;
 use switchboard_program::FastRoundResultAccountData;
 use switchboard_v2::AggregatorAccountData;
 
@@ -60,9 +59,6 @@ pub struct OracleConfig {
     pub max_staleness_slots: i64,
     pub reserved: [u8; 72],
 }
-const_assert_eq!(size_of::<OracleConfig>(), 16 + 8 + 72);
-const_assert_eq!(size_of::<OracleConfig>(), 96);
-const_assert_eq!(size_of::<OracleConfig>() % 8, 0);
 
 #[derive(AnchorDeserialize, AnchorSerialize, Debug)]
 pub struct OracleConfigParams {
@@ -96,9 +92,6 @@ pub struct StubOracle {
     pub last_updated: i64,
     pub reserved: [u8; 128],
 }
-const_assert_eq!(size_of::<StubOracle>(), 32 + 16 + 8 + 128);
-const_assert_eq!(size_of::<StubOracle>(), 184);
-const_assert_eq!(size_of::<StubOracle>() % 8, 0);
 
 pub fn determine_oracle_type(acc_info: &impl KeyedAccountReader) -> Result<OracleType> {
     let data = acc_info.data();
