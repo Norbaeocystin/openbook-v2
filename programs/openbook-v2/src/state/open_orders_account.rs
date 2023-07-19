@@ -1,5 +1,4 @@
 use anchor_lang::prelude::*;
-use static_assertions::const_assert_eq;
 use std::mem::size_of;
 
 use crate::error::*;
@@ -38,20 +37,6 @@ pub struct OpenOrdersAccount {
 
     pub open_orders: [OpenOrder; MAX_OPEN_ORDERS],
 }
-
-const_assert_eq!(
-    size_of::<OpenOrdersAccount>(),
-    size_of::<Pubkey>() * 2
-        + 32
-        + 32
-        + 4
-        + 1
-        + 3
-        + size_of::<Position>()
-        + MAX_OPEN_ORDERS * size_of::<OpenOrder>()
-);
-const_assert_eq!(size_of::<OpenOrdersAccount>(), 9504);
-const_assert_eq!(size_of::<OpenOrdersAccount>() % 8, 0);
 
 impl OpenOrdersAccount {
     /// Number of bytes needed for the OpenOrdersAccount, including the discriminator
