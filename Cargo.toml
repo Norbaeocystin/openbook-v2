@@ -22,7 +22,9 @@ spl-associated-token-account = "1.0.3"
 [profile.release]
 codegen-units = 1
 lto = "fat"
-overflow-checks = true
+overflow-checks = false
+[profile.dev]
+oveflow-checks = false
 [profile.release.build-override]
 codegen-units = 1
 incremental = false
