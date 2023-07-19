@@ -1,4 +1,5 @@
 //! A central-limit order book (CLOB) program that targets the Sealevel runtime.
+#![allow(arithmetic_overflow)]
 
 use anchor_lang::prelude::*;
 
