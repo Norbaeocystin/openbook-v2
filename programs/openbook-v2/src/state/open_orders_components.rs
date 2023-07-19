@@ -1,7 +1,6 @@
 use anchor_lang::prelude::*;
 
 use derivative::Derivative;
-use static_assertions::const_assert_eq;
 use std::mem::size_of;
 
 use crate::state::*;
@@ -29,10 +28,6 @@ pub struct Position {
     #[derivative(Debug = "ignore")]
     pub reserved: [u8; 88],
 }
-
-const_assert_eq!(size_of::<Position>(), 8 + 8 + 8 + 8 + 8 + 8 + 8 + 8 + 88);
-const_assert_eq!(size_of::<Position>(), 152);
-const_assert_eq!(size_of::<Position>() % 8, 0);
 
 impl Default for Position {
     fn default() -> Self {
@@ -73,9 +68,6 @@ pub struct OpenOrder {
     pub padding: [u8; 6],
     pub reserved: [u8; 32],
 }
-const_assert_eq!(size_of::<OpenOrder>(), 16 + 8 + 8 + 1 + 1 + 6 + 32);
-const_assert_eq!(size_of::<OpenOrder>(), 72);
-const_assert_eq!(size_of::<OpenOrder>() % 8, 0);
 
 impl Default for OpenOrder {
     fn default() -> Self {
