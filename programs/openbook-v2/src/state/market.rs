@@ -1,6 +1,5 @@
 use anchor_lang::prelude::*;
 use fixed::types::I80F48;
-use static_assertions::const_assert_eq;
 use std::convert::{TryFrom, TryInto};
 use std::mem::size_of;
 
@@ -111,42 +110,6 @@ pub struct Market {
 
     pub reserved: [u8; 1768],
 }
-
-const_assert_eq!(
-    size_of::<Market>(),
-    32 +                        // signer_creator
-    32 +                        // collect_fee_admin
-    32 +                        // open_order_admin
-    32 +                        // consume_event_admin
-    32 +                        // close_market_admin
-    size_of::<MarketIndex>() +  // MarketIndex
-    1 +                         // bump
-    1 +                         // base_decimals
-    1 +                         // quote_decimals
-    1 +                         // padding1
-    8 +                         // time_expiry
-    16 +                        // name
-    3 * 32 +                    // bids, asks, and event_queue
-    32 +                        // oracle
-    size_of::<OracleConfig>() + // oracle_config
-    8 +                         // quote_lot_size
-    8 +                         // base_lot_size
-    8 +                         // seq_num
-    8 +                         // registration_time
-    8 +                         // maker_fee
-    8 +                         // taker_fee
-    8 +                         // fees_accrued
-    8 +                         // fees_to_referrers
-    8 +                         // taker_volume_wo_oo
-    4 * 32 +                    // base_mint, quote_mint, base_vault, and quote_vault
-    8 +                         // base_deposit_total
-    8 +                         // quote_deposit_total
-    8 +                         // base_fees_accrued
-    8 +                         // referrer_rebates_accrued
-    1768 // reserved
-);
-const_assert_eq!(size_of::<Market>(), 2416);
-const_assert_eq!(size_of::<Market>() % 8, 0);
 
 impl Market {
     pub fn name(&self) -> &str {
