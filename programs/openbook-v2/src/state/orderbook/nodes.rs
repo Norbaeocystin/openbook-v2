@@ -1,3 +1,4 @@
+#![allow(arithmetic_overflow)]
 use std::mem::size_of;
 
 use anchor_lang::prelude::*;
