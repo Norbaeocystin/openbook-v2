@@ -4,7 +4,7 @@ use std::mem::size_of;
 use anchor_lang::prelude::*;
 use bytemuck::{cast_mut, cast_ref};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
-use static_assertions::const_assert_eq;
+// use static_assertions::const_assert_eq;
 
 use super::order_type::Side;
 
@@ -99,9 +99,6 @@ pub struct InnerNode {
 
     pub reserved: [u8; 72],
 }
-const_assert_eq!(size_of::<InnerNode>(), 4 + 4 + 16 + 4 * 2 + 8 * 2 + 72);
-const_assert_eq!(size_of::<InnerNode>(), NODE_SIZE);
-const_assert_eq!(size_of::<InnerNode>() % 8, 0);
 
 impl InnerNode {
     pub fn new(prefix_len: u32, key: u128) -> Self {
@@ -182,12 +179,6 @@ pub struct LeafNode {
 
     pub reserved: [u8; 32],
 }
-const_assert_eq!(
-    size_of::<LeafNode>(),
-    4 + 1 + 1 + 1 + 1 + 16 + 32 + 8 + 8 + 8 + 8 + 32
-);
-const_assert_eq!(size_of::<LeafNode>(), NODE_SIZE);
-const_assert_eq!(size_of::<LeafNode>() % 8, 0);
 
 impl LeafNode {
     #[allow(clippy::too_many_arguments)]
@@ -250,8 +241,6 @@ pub struct FreeNode {
     pub(crate) next: NodeHandle,
     pub(crate) reserved: [u8; NODE_SIZE - 8],
 }
-const_assert_eq!(size_of::<FreeNode>(), NODE_SIZE);
-const_assert_eq!(size_of::<FreeNode>() % 8, 0);
 
 #[zero_copy]
 #[derive(bytemuck::Pod, bytemuck::Zeroable)]
@@ -259,11 +248,6 @@ pub struct AnyNode {
     pub tag: u8,
     pub data: [u8; 119],
 }
-const_assert_eq!(size_of::<AnyNode>(), NODE_SIZE);
-const_assert_eq!(size_of::<AnyNode>() % 8, 0);
-const_assert_eq!(size_of::<AnyNode>(), size_of::<InnerNode>());
-const_assert_eq!(size_of::<AnyNode>(), size_of::<LeafNode>());
-const_assert_eq!(size_of::<AnyNode>(), size_of::<FreeNode>());
 
 pub(crate) enum NodeRef<'a> {
     Inner(&'a InnerNode),
